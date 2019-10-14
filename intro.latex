@@ -1,0 +1,556 @@
+\documentclass[16pt,spanish]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{blindtext}
+\usepackage{scrextend}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{imakeidx}
+\usepackage{setspace}
+\onehalfspacing
+\addtokomafont{labelinglabel}{\sffamily}
+
+\title{Seminario de investigación: \\
+Técnicas generativas para la producción audiovisual en entornos digitales}
+\author{Joaquin Cerviño\\
+        \and
+        Tutor: Esteban Calcagno\\}
+
+\begin{document}
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+\clearpage
+
+
+\section{Introducción}
+
+	El arte generativo comprende un corpus lo suficientemente amplio y variado
+	como para provocar desde un primer momento una situación problemática al
+	momento de definirse como disciplina. En el artículo ``What is Generative
+	Art?", Philip Galanter incurre en la tarea de encontrar los rasgos
+	distintivos de esta rama del arte y establece, de una forma preliminar, su
+	carácter interdisciplinario~\cite{galanter2003generative}. Galanter sostiene
+	que el espectro de producciones que engloba incluye a la música, desde el
+	punto vista del diseño sonoro y de la composición algorítmica; a la
+	producción visual hecha con computadoras, aplicada a juegos o películas; a la
+	\textit{demoscene} y la cultura de \textit{vjing}; al diseño industrial y la
+	arquitectura.
+
+\subsection{Presentación del trabajo}
+
+	En el proyecto de investigación se busca indagar sobre el proceso creativo
+	del arte generativo combinando entornos digitales de audio como Pure
+	Data~\cite{miller2007theory} con visuales como
+	Processing~\cite{greenberg2007processing}, a partir del estudio de tres
+	algoritmos específicos: autómatas celulares, \textit{L-systems} y algoritmos
+	genéticos.
+
+	Para investigar la implementación de dichos algoritmos, se hizo un
+	relevamiento de los desarrollos previos de éstos en aplicaciones de software
+	relacionadas con la producción de imágines, con la composición
+	algorítmica y con la secuenciación de sintetizadores. 
+
+\subsection{Objetivo}
+
+	El objetivo del trabajo es estudiar qué técnicas son y fueron empleadas para
+	lograr, a partir del \textit{output} de algoritmos, resultados audiovisuales
+	estéticos que no dejen de lado la correlación del proceso generador con el
+	sonido y la imagen obtenidos.
+
+\subsection{Metodología}
+
+	En una primer instancia, se hará un relevamiento y análisis de las
+	implementaciones realizadas investigando a partir de \textit{papers} y otras
+	publicaciones cómo y con qué fines se llevaron a cabo estos desarrollos
+	previos de aplicaciones.
+
+	En una segunda instancia, se implementarán en los entornos de software
+	previamente mencionados desarrollos preexistentes que hubieran aplicado los
+	algoritmos estudiados. Para tal fin se desarrollarán aplicaciones para
+	generar un resulado audiovisual en tiempo real.
+
+	Para el estudio de los autómatas celulares, se escogió una implementación
+	creada por Eduardo Reck Miranda, llamada \textit{Chaosynth}. Miranda creó un
+	sintetizador granular que utiliza dicha algoritmo como
+	secuenciador~\cite{miranda1995granular}.
+
+	En el caso de los \textit{L-systems} y los algoritmos genéticos, se decidió
+	realizar una implementación a partir de una publicación de Manousakis
+	\cite{manousakis2009non}, que propone formas de utilizarlos, pero sin seguir
+	un desarrollo de una aplicación puntual.
+
+\subsection{Conclusiones}
+
+	De los estudios de caso indagados, y otros materiales investigados que también
+	proponen formas de implemetación de algoritmos, se observó que el método
+	principalmente utilizado para vincular el \textit{output} de éstos con un
+	resultado compositivo, sonoro o visual se puede denominar técnica de mapeo o
+	\textit{mapping technique}. Esta instancia correlaciona los valores
+	entregados por el algoritmo con los materiales constitutivos de disciplinas
+	artísticas, pudiendo tratarse de notas, sonidos, trazos o figuras geométricas
+	mediante la intervención del factor humano dado por el compositor, artista o
+	programador. Se puede señalar en este etapa el final de la ``autonomía" del
+	proceso de desarrollo del algoritmo, en su naturaleza procesual, en el cual
+	existe el error en forma objetiva de acuerdo a instrucciones que determinan
+	un procedimiento y el comienzo de otra fase donde la subjetividad estipula
+	qué resultados desechar o preservar o en qué medida modificar las condiciones
+	iniciales y las instrucciones del proceso autónomo para variar su resultado
+	final.
+	
+	Las implicancias de la denominada \textit{mapping technique} son muy amplias,
+	ya que ésta es constitutiva en la utilzación de entornos como Processing,
+	Pure Data, OpenFrameworks o similares. Los usuarios de dichos programas
+	mapean valores numéricos que pueden ser deterministas, estocásticos o
+	representar valores de una base de datos a procesos que los convierten en
+	sonidos o imágenes. Esta técnica relaciona claramente estas prácticas con la
+	visualización de datos y la sonificación de los mismos y a grandes rasgos
+	se la puede señalar como el fundamento del arte digital, o generativo.
+
+
+	\section{Autómata Celular}
+	\subsection{Introducción}
+
+		Los autómatas celulares fueron concebidos por Stanislaw Ulam y John von
+		Neumann a partir de análisis realizados sobre desarrollos morfológicos y
+		caracterizados como sistemas complejos que pueden manifestar un
+		comportamiento global o emergente.  Coveney y Highfield definen a una
+		propiedad emergente como “una propiedad de un sistema complejo que consiste
+		de varias unidades que interactúan” ~\cite{coveney1996frontiers}. Estos
+		sistemas fueron objeto de estudio durante años, contando entre sus
+		estudiosos a científicos como Konrad Zuse, Ed Fredkin y Stephen Wolfram.
+		Este último hizo uno de los desarrollos y análisis más extensos sobre el
+		tema. 		
+
+		Wolfram define a los autómatas celulares como ``una línea de células, cada
+		una coloreada de negro o blanco, representando dos estados posibles. El
+		estado de cada célula se evalúa a cada paso, puediendo permanecer en su
+		estado previo o cambiar su condición, de acuerdo a una regla definida que
+		toma por parámetros la condición de las dos células vecinas en el paso
+		anterior"\,~\cite{wolfram2002new}. El autor destaca que los
+		autómatas celulares son capaces de manifestar un comportamiento altamente
+		complejo pese a que se comporten según una regla sencilla y hayan partido
+		de un estado inicial simple. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\linewidth, bb = 0 0 1096 333]{imagesCA/Example-2.jpg}
+	\caption{Ejemplo de propagación de un autómata celular y su regla.~\cite{wolfram2002new}}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\linewidth, bb = 0 0 782 490]{imagesCA/Example-3.jpg}
+	\caption{Ejemplo de propagación de un autómata celular y su regla~\cite{wolfram2002new}}
+\end{figure}
+
+	A partir de la observación realizada sobre los resultados de distintos tipos
+	de autómatas celulares, es decir, basados en distintas reglas, y provenientes
+	de estados iniciales aleatorios, Wolfram llega a la conclusión de que el
+	comportamiento emergente de éstos puede ser clasificados en cuatro grupos.
+	Éstos a su vez están ordenados según un grado creciente de complejidad.
+
+
+\begin{figure}[ht]
+	\includegraphics[width=\linewidth, bb = 0 0 637 206 ]{imagesCA/clasificacion.jpg}
+	\caption{Los cuatro grupos propuestos por Wolfram para clasificar los autómatas celulares~\cite{wolfram2002new}}
+\end{figure}
+
+
+	El primer grupo es el que exhibe el comportamiento más simple y en éste se
+	incluye a los AC que desde cualquier punto inicial derivan en un mismo
+	estado final uniforme.  En el segundo grupo, hay varios estados finales pero
+	todos estos permanecen inalterados o se repiten luego de un número reducido
+	de pasos.  En el tercer grupo el comportamiento es más complejo y es en su
+	gran mayoría aleatorio, aunque puedan manifestarse pequeñas estructuras, como
+	triángulos, de forma esporádica.  En el cuarto grupo, se agrupa a los AC que
+	muestran un comportamiento que resulta de una mezcla de aleatoriedad y orden.
+	En esta categoría se puede observar la aparición de pequeñas estructuras que
+	a su vez interactúan con otras de un forma compleja.		
+
+\subsection{Estudio de caso}
+
+\subsubsection{Introducción al estudio de caso}
+
+	Una de los primeros casos de uso de autómatas celulares para la composición
+	es la obra Horos de Xenakis, en la cual el compositor hizo uso de dichos
+	algoritmos para determinar sucesiones de acordes
+	~\cite{burraston2005cellular}.  Otras implementaciones destacables de los AC
+	para la composición algorítmica es el CAM (Celular Automata Music)
+	desarrollado por Dale Millen en la Universidad de Arkansas y los
+	programas CAMUS y CAMUS3D desarrollados por Eduardo Reck Miranda.
+
+	Una de las aplicaciones que vincula más claramente la representación
+	visual y sonora del algoritmo en cuestión es el \textit{Chaosynth}
+	desarrollado por Eduardo Reck Miranda ~\cite{miranda1995granular}. Dicho
+	desarrollo utiliza los resultados o el \textit{output} de un autómata celular
+	para la secunciación de un sintetizador granular.
+
+	La síntesis granular es una técnica que fue conceptualizada por primera vez
+	por Xenakis en su libro Musiques Formelles~\cite{xenakis1981musiques}.
+	Las primeras implementaciónes se puedieron lograr con el advenimiento de la
+	síntesis digital, siendo Curtis Roads~\cite{roads1991asynchronous} y
+	Truax~\cite{truax1988real} los primeros en experimentar e implementar
+	esta técnica. Posteriormente, Roads le otorgó un marco conceptual y académico
+	que quedó plasmado en su libro Microsound~\cite{roads2004microsound}.
+	Esta técnica consiste en la utilización de un gran número ``granos" (sonidos
+	de muy corta duración, por ejemplo, de hasta 50 milisegundos), que pueden
+	tener variadas formas de onda y a los cuales se les aplica una envolvente. La
+	masa generada como resultado de la sumatoria de granos tiene parámetros
+	globales que la determinan, como por ejemplo, la densidad. En este aspecto
+	Xenakis propone procedimientos estocásticos para modelar la morfología de
+	estas nubes de granos. Eduardo Reck Miranda~\cite{miranda1995granular}
+	sugiere la utilización de autómatas celulares para controlar la producción de
+	granos en la síntesis granular a través del \textit{Chaosynth}.
+
+\subsubsection{Chaosynth}
+
+	ChaOs proviene de la expresión \textit{Chemical Oscillator}, ``una
+	representación metafórica de un fenómeno neurofisiológico conocido como
+	circuito de reverberación neuronal" \,~\cite{miranda1995granular}. En este caso, las células
+	que componen al AC son interpretadas como células nerviosas que pueden
+	manifestar tres estados: inactivo (\textit{quiescent}), despolarizado
+	(\textit{depolarized}) o quemado (\textit{burned state}). Este AC evoluciona
+	de un estado incial de completa aleatoriedad a un comportamiento oscilatorio
+	donde pueden discernirse patrones. Miranda plantea que esta característica
+	emergente del sistema es similar a cómo se producen sonidos de forma natural
+	en instrumentos acúsitcos ya que, al igual que el AC, ``los sonidos tienden a
+	converger de una amplia distribución de sus parciales (por ejemplo ruido) a
+	patrones oscilatorios (por ejemplo, un sonido
+	armónico)"\, ~\cite{miranda1995granular}. En el Chaosynth la interacción entre
+	células representa la circulación de corriente entre ellas. Hay dos umbrales
+	con distintos valores, uno con un valor de voltaje mínimo(\(Vmin\)) y otro
+	con un valor máximo(\(Vmax\)). Si el valor del voltaje de la célula se
+	encuentra por debajo del \(Vmin\), la célula se encuentra en estado inactivo
+	(o ``polarizada"); si su valor está entre \(Vmin\) inclusive y \(Vmax\) está
+	despolarizada. Cada célula ``tiene un divisor de potencia (\textit{potiential
+	divider}) cuya finalidad es mantener el voltaje de la misma debajo de
+	\(Vmin\). Si el divisor falla, esto es, si \(Vi\) alcanza \(Vmin\), la célula
+	nerviosa se despolariza. También, está en juego un capacitor eléctrico que
+	regula la velocidad de
+	despolarización"\,~\cite{miranda1995granular}. Miranda destaca que la
+	tendencia global del sistema es a que la células se despolaricen cada vez más
+	con el transcurrir del tiempo, o a cada paso. Por último, se aclara que ``una
+	célula quemada en el tiempo (o paso \(t\)) es reemplazada por una nueva célula
+	inactiva en el siguiente paso \(t+1\)"\,~\cite{miranda1995granular}.
+
+	A modo de resumen, se puede inferir que el comportamiento del ChaOs depende de los siguientes factores:
+
+\begin{enumerate}
+	\item El número n de estados, siendo \(n > 3\).
+	\item El valor de las resistencias \(r1\) y \(r2\) del divisor de potencia.
+	\item La capacitancia \(k\) del grado de depolarización.
+	\item La velocidad \(t\) del sistema.
+	\item La dimensión de la grilla.
+\end{enumerate}
+
+
+	El Chaosynth hace uso del comportamiento del sistema anteriormente
+	descripto(ChaOs) para manejar la generación de un gran número de ``partículas
+	sonoras" para formar un evento sonoro complejo. Miranda hace uso de lo que
+	denomina \textit{Mapping Technique}(técnica de mapeo) para utilizar el ChaOs
+	con el fin de secuenciar partículas sonoras, o ``granos". Cada una de estas
+	partículas  ``está compuesta por varios parciales. Cada parcial es una
+	sinusoide generada por un oscilador. Un oscilador necesita tres parámetros
+	para funcionar: frecuencia, amplitud y duración(en milisegundos). ChaOs
+	controla los valores de frecuencia y la duración de la partícula, pero los
+	valores de amplitud son establecidos por el usuario de forma previa. Los
+	estados de una célula nerviosa están asociados a un valor de frecuencia y los
+	osciladores están asociados a un cierto número de células. Los valores de
+	frecuencia en un tiempo t son, por consiguiente, establecidos por el promedio
+	de las frecuencias asociados a los estados de la célula nerviosa mapeada a
+	cada oscilador"\,~\cite{miranda1995granular}. En el Chaosynth se permite al usuario
+	establecer otros parámetros como por ejemplo, el tamaño de la grilla, la
+	cantidad de osciladores, la relación entre células nerviosas y osciladores y
+	los parámetros internos del ChaOS (el número de estados, el valor de las
+	resistencias, la capacitancia de las células). En cuanto a la síntesis de
+	sonido se puede agregar que es conisderable también como aditiva, ya que cada
+	partícula sonora o ``grano" \, es generado por la unión de varias sinusoides.
+
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\linewidth, bb = 0 0 673 560]{imagesCA/mapping_technique.jpg}
+\caption{Técnica de mapeo.~\cite{miranda1995granular}}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\linewidth, bb = 0 0 860 457]{imagesCA/Granular_output.jpg}
+\caption{Resultado obtenido por el Chaosynth.~\cite{miranda1995granular}}
+\end{figure}
+
+
+\subsubsection{Implementación}
+
+	El Chaosyth se trata de un autómata celular de dos dimensiones. La
+	representación varía en comparación a los expuestos en la introducción en que
+	lo que se grafica es un estado actual en una grilla de células, en
+	contraposición al de una serie de pasos consecutivos.
+
+	Para desarrollar el autómata celular, se decidió modificar una implementación
+	del mismo hecha en el entorno Processing.  La versión del Chaosynth realizada
+	para el seminario está basada en la de Daniel Shiffman del \textit{Game of
+	Life} de John Conway. El juego desarrollado por el matemático Conway consiste
+	en un tablero con casilleros que pueden estar ocupados o no por fichas, que
+	representan organismos ``vivos", que se trasladan de acuerdo a ``leyes
+	genéticas". Esta clase de juegos se denominan de
+	``simulación"(\textit{Simulation game}) ya que exhiben un desarrollo análogo
+	a aquellos de seres vivos. Las reglas estipuladas por el creador del juego
+	fueron hechas para que satisfagan las siguientes tres normas: ``1. No debe
+	haber un patrón inicial[de células] mediante el cual pueda haber una
+	propagación sin límite de células. 2. Debe haber parámetros iniciales que
+	aparentemente crezcan sin límite. 3. Debe haber un patrón inicial simple que
+	crezca y se transforme durante un tiempo considerable y llegue a tres finales
+	posibles: desaparecer completamente (por superpoblación o escasez),
+	permanecer en una configuración estable que permanece sin cambios, o entrar
+	en una fase oscilatoria en la cual se repitan patrones de forma permanente
+	cada dos o tres ciclos".~\cite{gardner1971mathematical} Shiffman interpreta
+	que el \textit{Game of Life} se trata de un autómata celular de clase 4 según
+	la taxonomía de Wolfram.~\cite{shiffman2012nature}. Como el Chaosynth
+	representa metafóricamente a un oscilador químico en el cual células se
+	despolarizan o queman, el Game of Life representa el desarrollo de organismos
+	que nacen, mueren o sobreviven según el estado de las células vecinas: ``1.
+	Supervivencia. Cada ficha [célula] que contenga dos o tres células adyacentes
+	sobrevive a la siguiente generación. 2. Muertes. Cada célula que posea cuatro
+	o más vecinos muere por superpoblación. Cada, célula con un solo vecino o
+	ninguno muere por su aislamiento. 3. Nacimientos. Cada célula muerta o
+	casillero vacío con exactamente tres células adyacentes vivas nace, esto es,
+	ese casillero posee una célula viva en la siguiente
+	generación".~\cite{gardner1971mathematical} El Chaosynth es una extensión del
+	Game of Life con otras reglas y con más estados posibles para las células.
+	
+	La generación de sonido se logra mediante la utilización del programa Pure
+	Data, desarrollado por Miller Puckette~\cite{miller2007theory} y se vinculan
+	los dos procesos mediante la utilización del protocolo OSC(\textit{Open Sound
+	Control})\,~\cite{wright2005open}. Processing genera \textit{frames} o imágenes
+	de forma consecutiva y a una frecuencia estable para lograr la animación.
+	Cada una de éstas es graficada luego de una instancia de procesamiento donde
+	se calculan los valores venideros de cada célula del AC, esto es, los colores
+	y las posiciones de los cuadrados en la pantalla que los representan. Es en
+	esta instancia que también se calculan promedios de valores de secciones del
+	tablero de células para utilizarlos como parámetros en la secuenciación del
+	sintetizador. Para lograr este fin, son enviados utilizando el protocolo OSC.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\linewidth, bb= 0 0 508 480]{imagesCA/gol_1a.jpg}
+	\caption{Ejemplo del funcionamiento del \textit{Game of Life}.~\cite{gardner1971mathematical}}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\linewidth, bb = 0 0 681 480]{imagesCA/gol_2a.jpg}
+\caption{Patrones que emergen del \textit{Game of Life}, como el ``panal de abejas".~\cite{gardner1971mathematical}}
+\end{figure}
+
+\clearpage 
+
+\section{Sistemas de Lindenmayer}
+\subsection{Introducción}
+
+	Los sistemas de Lindenmayer o \textit{L-systems} son un teoría matemática concebida por el botánico Aristid Lindenmayer en 1968~\cite{lindenmayer1968mathematical}. El objetivo del desarrollo original era describir de forma topológica las relaciones entre el crecimiento de células y otras partes más grandes de plantas. Los aspectos geométricos y de repesentación de estos sistemas no fueron abordados por Lindenmayer. De todas formas, posteriormente fueron implementadas técnicas para lograr una representación gráfica de los mismos por Prusinkiweicsz~\cite{prusinkiewicz2012algorithmic}, entre otros. 
+	El concepto más característico de los \textit{L-systems} es el de la reescritura, esto es, generar un objeto complejo a partir de la sustitución de los elementos más simples que originalmente lo componen por otros más extensos, de forma iterada. Este proceso se lleva a cabo mediante \textit{reglas de reescritura} que a su vez, en cada iteración, generan una \textit{producción}. 
+	Un ejemplo de una representación gráfica lograda mediante la reescritura de sus partes es la ``snowflake curve" de von Koch.
+
+\begin{figure}[ht]
+  \includegraphics[width=\linewidth, bb= 0 0 814 541]{abop_resources/1_snowflake_curve.png}
+	\caption{Construcción de ``snowflake curve" de von Koch.~\cite{prusinkiewicz2012algorithmic}}
+\end{figure}
+
+	Se puede considerar un antecedente al sistema de reescritura en cuestión al propuesto por Chomsky~\cite{chomsky1956three} para la representación sintáctica de lenguajes naturales. Sin embargo, el propuesto por Lindenmayer es más orientado a la biología ya que buscaba modelar la forma en que las células se dividen en un organismo viviente.
+	
+\subsection{Sistemas DOL}
+
+	La clase más simple de los \textit{L-systems} son conocidos como \textit{DOL-systems}, y se caracterizan por ser deterministas (o no aleatorios) y libres de contexto. Se los puede caracterizar como a una cadena de caracteres constituídos por un grupo determinado de letras. Cada una de éstas está asociada a una relga de reescritura que implica de qué forma se la sustituye. El siguiente ejemplo es una muestra de cadenas formadas por las letras \textit{a} y \textit{b}. Las reglas de sustitución son las siguientes: \textit{a} \(\rightarrow\) \textit{ab} y  \textit{b} \(\rightarrow\) \textit{a}. Esto significa que \textit{a} es reemplazado por \textit{ab} en cada iteración, y a su vez \textit{b} es sustituído por \textit{a}.
+
+\begin{figure}[ht]
+	\centering
+  \includegraphics[width=0.5\linewidth, bb = 0 0 560 419]{abop_resources/2_derivation_DOL-system.png}
+	\caption{Derivación de un sistema DOL.~\cite{prusinkiewicz2012algorithmic}}
+\end{figure}
+
+\subsection{Representación gráfica}
+
+		La representación gráfica más extendida para transformar las cadenas de
+		caracteres en dibujos se logra mediante la utilización de la ``tortuga"
+		\, LOGO~\cite{abelson1986turtle}. Dicha ``tortuga"  se translada por el
+		espacio de la pantalla dibujando su recorrido, dando pasos o cambiando su
+		dirección. Generalmente ésta es utilizada con fines didácticos para la
+		visualización de algoritmos. El estado de la tortuga se puede expresar
+		mediante tres valores: (\(x, y, \alpha \)). La posición se determina
+		utilizando las coordenadas Cartesianas \(x\) e \(y\); el ángulo \(\alpha\)
+		es la dirección hacia donde avanza. La distancia que recorre la tortuga a
+		cada paso se llama \textit{d}; la variación del ángulo, \(\delta.\) El
+		proceso de dibujo de la tortuga se puede expresar mediante las siguientes
+		instrucciones:
+
+\begin{labeling}{F}
+	
+\item[F] Avanzar hacia adelante un paso de tamaño \textit{d}. El estado de la tortuga cambia a (\(x',y', \alpha\)) donde \(x' = x + d \cos(\alpha)\) e \(y' = y + d \sin(\alpha)\). Se dibuja una línea entre los puntos (\(x,y\)) y (\(x', y'\)).
+
+\item[f] Avanzar hacia adelante un paso de tamaño \textit{d} sin dibujar una línea.
+
+\item[+] Girar hacia la izquierda un ángulo \(\delta\). El estado siguiente de la tortuga es (\(x,y, \alpha + \delta \)). Un ángulo positivo hace girar a la tortuga en un sentido antihorario.
+
+\item[-] Girar hacia la derecha un ángulo \(\delta\). El estado siguiente de la tortuga es (\(x, y, \alpha - \delta \)).
+\end{labeling}
+	
+\begin{figure}[ht]
+	\centering
+  \includegraphics[width=\linewidth, bb = 0 0 714 388]{abop_resources/3_turtle_implementation_of_lsys.png}
+	\caption{Implementación gráfica de la ``tortuga".~\cite{prusinkiewicz2012algorithmic}}
+\end{figure}
+
+\subsection{Sonificación}
+
+	Prusinkiweicsz sugiere aplicar los \textit{L-systems} para la composición
+	algorítmica utilizando los valores de la posición de la tortuga como
+	parámetros asignables a la altura y la duración de notas
+	musicales~\cite{prusinkiewicz1986score}. Ejemplos de empleo de dicho
+	algoritmo para la composición son las piezas \textit{Transitioning L-systems:
+	Tramontana} de Michael Edwards y \textit{Cells} de Hanspeter
+	Kyburz~\cite{edwards2011algorithmic} . En dichas obras se \textit{mapea} los
+	resultados obtenidos a motivos musicales, que posteriormente son
+	seleccionados o rechazados por el compositor durante el proceso creativo. La
+	utilización de una técnica de mapeo para vincular el resultado o
+	\textit{output} de un algoritmo para el control de parámetros que resulten en
+	la creación de una pieza musical es constitutiva en la práctica de la
+	composición algorítmica. Se puede señalar en esta etapa el límite de la
+	automaticidad de un proceso y el comienzo de la intervención de un agente
+	humano que decide de forma personal cómo emplear el material generado. La
+	forma de empleo de dicho material también está sujeta a las posibilidades que
+	ofrece la tecnología en un momento dado. Se puede suponer que es por esta
+	razón que históricamente la composición algorítmica o el arte generativo no
+	fueran implementados en tiempo real. El advenimiento de nuevas posibilades
+		permiten usos novedosos de los algoritmos previamente utilizados. 
+
+	Stelios Manousakis propone la implementación de técnicas de síntesis de
+	sonido no convencionales o \textit{non-standard sound synthesis} para generar
+	sonido a partir de los \textit{L-systems} ~\cite{manousakis2009non}. Dicho
+	autor define a esta clase de síntesis como `` un tipo abstracto de síntesis
+	de sonido que describe al sonido mediante valores de tiempo y amplitud".
+	Destaca el carácter experimental de esta técnica y su vínculación con el
+	sonido digital y agrega ``las técnicas no convencionales se relacionan más
+	con modelos matemáticos y la abstracción compositiva que con el oído
+	humano(como la síntesis espectral), la características físicas de los
+	objetos(modelado físico) o reproducción de fuentes de sonido(técnicas basadas
+	en sampleo)". Por último, concluye que este acercamiento a la generación de
+	sonido puede considerarse un tipo de ``microcomposición, uniendo al mundo de
+	la síntesis de sonido con el de la notación en un solo sistema como una
+	estrategia para logarar coherencia entre forma, estructura y material". El
+	autor propone mapear el resultado de los algoritmos a tablas de forma de onda
+	o \textit{wavetables} y realizar procesos sobre éstos, por ejemplo
+	modulaciones de la forma de onda basado en la \textit{reescritura} de
+	fragmentos.  Una técnica de mapeo que guarde una relación estricta con la
+	representación gráfica de un \textit{L-system} se puede lograr vinculando la
+	trayectoria del dibujo resultante en dos dimensiones \(x\) e \(y\) a dos
+	\textit{wavetables}.
+	
+\subsection{Implementación}
+
+	Se escogió \textit{OpenFrameworks}, un \textit{framework}(o conjunto de
+	herramientas) orientado a la producción audiovisual desarrollado en C++, para
+	implementar los \textit{L-systems}. La elección se basó en que dicho entorno
+	permite la fácil y eficiente manipulación de los valores resultantes o
+	\textit{output} del algoritmo para \textit{mapearlos} a procesos que
+	determinen su representación visual y sonora. El \textit{framework} utilizado
+	es similar a Processing, previamente empleado para la visualización de
+	autómatas celulares, pero la capacidad de \textit{OpenFrameworks} de poder
+	escribir valores arbitrarios al \textit{buffer} de salida de audio fue
+	considerada esencial para lograr la sonificación. 
+	
+	En la primer instancia de desarrollo, se programó un proceso que creara de
+	forma aleatoria \textit{L-systems}. Se decidió lograr dicho cometido
+	asignando los valores de las reglas de reescritura, el ángulo \(\alpha\), el
+	número de iteraciones y la posición inicial de forma azarosa.
+	
+	Generar los \textit{L-systems} con aleatoriedad posee la ventaja de lograr un
+	alto grado de variedad en los resultados obtenidos. Por otro lado, la
+	impredictibilidad del \textit{output} puede crear problemas para la
+	manipulación del mismo. Debido a esto, se aplicaron límites que hicieran más
+	fácil la visualización. Un ejemplo de éstos es la manipulación de la
+	representación visual de los \textit{L-systems} con el fin de que ocupen un
+	lugar determinado dentro de la ventana de la aplicación y, en caso de que se
+	excediera el mismo, forzar la vuelta al centro del espacio asignado.
+	
+	Con el fin de sonificar los \textit{L-systems}, se buscó \textit{mapear} los
+	valores de posición de la representación gráfica a valores que pudieran ser
+	utilizados en una tabla de forma de onda o \textit{wavetable} como muestras o
+	\textit{samples}. En un principio, se procuró normalizar las formas de onda
+	en una etapa previa a ser escritas en el \textit{buffer} de sonido. Para
+	\textit{mapear} el \textit{output} a \textit{wavetables} que puedieran ser
+	transferidas sin problemas al \textit{buffer} de salida de audio, se procuró
+	que el número de pasos resultantes del proceso de \textit{reescritura} del
+	algoritmo fueran potencias de 2, con el fin de obtener producciones de 16, 64,
+	512, 1024 o 4096 pasos o muestras.
+
+\begin{figure}[ht]
+	\centering
+  \includegraphics[width=\linewidth, bb = 0 0 1024 798]{abop_resources/lsys-2_inverted.png}
+	\caption{Captura de la aplicación, donde se puede observar en la parte central el \textit{L-system} y sobre el margen izquierdo y superior las formas de onda obtenidas.}
+\end{figure}
+
+\subsection{Conclusión}
+
+	Utilizar \textit{L-systems} para generar formas de onda arroja resultados
+	cuyo uso se justifica esencialmente al encontrar una relación directa entre
+	el resultado visual y sonoro. Generar \textit{wavetables} a partir de la
+	implementación de dichos algoritmos y cierto grado de aleatoriedad puede ser
+	un punto de partida para una práctica experimental de síntesis sonora. 
+	
+	Se puede decir que es un método generativo ya que el proceso está sujeto a
+	las instrucciones que sigue el algoritmo, en este caso la
+	\textit{reescritura}, y se desarrolla de forma autónoma.
+
+	El timbre resultante no es armónico. De todas formas, se puede percibir la
+	presencia de componentes con distinta altura.
+
+\section{Algoritmos genéticos}
+\subsection{Introducción}
+
+	Los algoritmos genéticos son definidos por Whitley como ``una familia de
+	modelos computacionales inspirados en la
+	evolución"\,~\cite{whitley1994genetic}. Fueron caracterizados e investigados
+	en un principio por John Holland~\cite{holland1992adaptation}. Son utilizados
+	generalmente para lograr optimizaciones de todo tipo emulando cómo se
+	desarrollan los procesos evolutivos según la teoría de Darwin.  Para lograr
+	dicho cometido, \textit{encodean} información en forma de una estructura de
+	datos similar a los genes contenidos en los cromosomas de seres vivos. Se
+	puede decir en forma general que este algoritmo está basado en la forma en la
+	que se desarrolla una población que sufre cambios aleatorios en sus genes y
+	es posteriormente sometida a un proceso de selección(\textit{fitness
+	function}). Boden denomina a la utilización de este principio en un contexto
+	artístico como \textit{Evo-art} y plantea la ambigüedad que existe entre la
+	decisión del artista de aplicar una selección arbitraria o que ésta esté
+	incluida dentro del programa mismo~\cite{boden2009generative}.Trabajos
+	destacados utilizando este algoritmo son Genetic Images y Galapagos del
+	artista visual Karl Sims~\cite{sims1994evolving} y Vox Populi de
+	Moroni\cite{moroni2000vox}, aplicado a la composición algorítmica.
+	
+\subsection{Aplicación}
+
+	Para implementar el algoritmo genético se decidió aplicarlo sobre la
+	transformación de los sistemas de Lindenmayer. Con tal fin, en una primera
+	instancia se \textit{encodearon} las características de éstos: el ángulo
+	\(\alpha\), la distancia \textit{d}, la regla y el número de iteraciones en
+	una estructura de datos, que representa de manera análoga la información
+	contenida en ``genes". Posteriormente, se aplica un proceso sobre estos 
+	genes en el cual se modifica aleatoriamente uno de sus componentes.
+	De esta manera, se obtiene una nueva ``generación" de \textit{L-system} que
+	conserva información del sistema que lo precediera.
+	
+	En la instancia posterior a la alteración del gen, en la que se debiera aplicar la
+	selección, se decidió introducir el \textit{input} del usuario.  De tal forma
+	la \textit{fitness function} es llevada a cabo por el criterio de un usario
+	que decidiera si preservar o la evolución efectuada sobre el gen del
+	\textit{L-system}.
+
+\newpage
+\bibliography{biblio.bib}
+\bibliographystyle{plain}
+
+\end{document}
+

@@ -1,0 +1,140 @@
+\begin{thebibliography}{10}
+
+\bibitem{abelson1986turtle}
+Harold Abelson and Andrea~A DiSessa.
+\newblock {\em Turtle geometry: The computer as a medium for exploring
+  mathematics}.
+\newblock MIT press, 1986.
+
+\bibitem{boden2009generative}
+Margaret~A Boden and Ernest~A Edmonds.
+\newblock What is generative art?
+\newblock {\em Digital Creativity}, 20(1-2):21--46, 2009.
+
+\bibitem{burraston2005cellular}
+Dave Burraston and Ernest Edmonds.
+\newblock Cellular automata in generative electronic music and sonic art: a
+  historical and technical review.
+\newblock {\em Digital Creativity}, 16(3):165--185, 2005.
+
+\bibitem{chomsky1956three}
+Noam Chomsky.
+\newblock Three models for the description of language.
+\newblock {\em IRE Transactions on information theory}, 2(3):113--124, 1956.
+
+\bibitem{coveney1996frontiers}
+Peter Coveney, Roger Highfield, and N~David Mermin.
+\newblock Frontiers of complexity: The search for order in a chaotic world.
+\newblock {\em Physics Today}, 49:58, 1996.
+
+\bibitem{edwards2011algorithmic}
+Michael Edwards.
+\newblock Algorithmic composition: computational thinking in music.
+\newblock {\em Communications of the ACM}, 54(7):58--67, 2011.
+
+\bibitem{galanter2003generative}
+Philip Galanter.
+\newblock What is generative art? complexity theory as a context for art
+  theory.
+\newblock In {\em In GA2003--6th Generative Art Conference}. Citeseer, 2003.
+
+\bibitem{gardner1971mathematical}
+Martin Gardner.
+\newblock Mathematical games: on cellular automata, self-reproduction, the
+  garden of eden and the game" life".
+\newblock {\em Sci. Am.}, 224:112--117, 1971.
+
+\bibitem{greenberg2007processing}
+Ira Greenberg.
+\newblock Processing.
+\newblock {\em Creative Coding and Computational Art. Friends of Ed}, 2007.
+
+\bibitem{holland1992adaptation}
+John~Henry Holland et~al.
+\newblock {\em Adaptation in natural and artificial systems: an introductory
+  analysis with applications to biology, control, and artificial intelligence}.
+\newblock MIT press, 1992.
+
+\bibitem{lindenmayer1968mathematical}
+Aristid Lindenmayer.
+\newblock Mathematical models for cellular interactions in development i.
+  filaments with one-sided inputs.
+\newblock {\em Journal of theoretical biology}, 18(3):280--299, 1968.
+
+\bibitem{manousakis2009non}
+Stelios Manousakis.
+\newblock Non-standard sound synthesis with l-systems.
+\newblock {\em Leonardo Music Journal}, pages 85--94, 2009.
+
+\bibitem{miller2007theory}
+S~Puckette MILLER.
+\newblock Theory and technique of eletronic music, 2007.
+
+\bibitem{miranda1995granular}
+Eduardo~Reck Miranda.
+\newblock Granular synthesis of sounds by means of a cellular automaton.
+\newblock {\em Leonardo}, 28(4):297--300, 1995.
+
+\bibitem{moroni2000vox}
+Artemis Moroni, J{\^o}natas Manzolli, Fernando~Von Zuben, and Ricardo Gudwin.
+\newblock Vox populi: An interactive evolutionary system for algorithmic music
+  composition.
+\newblock {\em Leonardo Music Journal}, pages 49--54, 2000.
+
+\bibitem{prusinkiewicz1986score}
+Przemyslaw Prusinkiewicz.
+\newblock Score generation with l-systems.
+\newblock In {\em ICMC}, 1986.
+
+\bibitem{prusinkiewicz2012algorithmic}
+Przemyslaw Prusinkiewicz and Aristid Lindenmayer.
+\newblock {\em The algorithmic beauty of plants}.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem{roads1991asynchronous}
+Curtis Roads.
+\newblock Asynchronous granular synthesis, representations of musical signals,
+  1991.
+
+\bibitem{roads2004microsound}
+Curtis Roads.
+\newblock {\em Microsound}.
+\newblock MIT press, 2004.
+
+\bibitem{shiffman2012nature}
+Daniel Shiffman.
+\newblock {\em The Nature of Code: Simulating Natural Systems with Processing}.
+\newblock Daniel Shiffman, 2012.
+
+\bibitem{sims1994evolving}
+Karl Sims.
+\newblock Evolving 3d morphology and behavior by competition.
+\newblock {\em Artificial life}, 1(4):353--372, 1994.
+
+\bibitem{truax1988real}
+Barry Truax.
+\newblock Real-time granular synthesis with a digital signal processor.
+\newblock {\em Computer Music Journal}, 12(2):14--26, 1988.
+
+\bibitem{whitley1994genetic}
+Darrell Whitley.
+\newblock A genetic algorithm tutorial.
+\newblock {\em Statistics and computing}, 4(2):65--85, 1994.
+
+\bibitem{wolfram2002new}
+Stephen Wolfram.
+\newblock {\em A new kind of science}, volume~5.
+\newblock Wolfram media Champaign, IL, 2002.
+
+\bibitem{wright2005open}
+Matthew Wright.
+\newblock Open sound control: an enabling technology for musical networking.
+\newblock {\em Organised Sound}, 10(3):193--200, 2005.
+
+\bibitem{xenakis1981musiques}
+Iannis Xenakis.
+\newblock Musiques formelles nouveaux principes formels de composition
+  musicale.
+\newblock 1981.
+
+\end{thebibliography}
